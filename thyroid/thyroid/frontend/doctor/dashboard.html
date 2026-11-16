@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Dashboard</title>
+    <link rel="stylesheet" href="../css/dashboard.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <nav class="sidebar">
+            <div class="logo">
+                <h2>Doctor Portal</h2>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#" class="nav-link active" data-page="home">Dashboard</a></li>
+                <li><a href="#" class="nav-link" data-page="appointments">My Appointments</a></li>
+                <li><a href="#" class="nav-link" data-page="patient-reports">Patient Reports</a></li>
+                <li><a href="#" class="nav-link" data-page="connect-doctors">Connect with Doctors</a></li>
+                <li><a href="#" class="nav-link logout" id="logoutBtn">Logout</a></li>
+            </ul>
+        </nav>
+
+        <main class="main-content">
+            <!-- Home Page -->
+            <div class="page-content" id="home-page">
+                <h1>Welcome, <span id="doctorName">Doctor</span></h1>
+                <div class="welcome-message">
+                    <p>Manage your appointments, review patient reports, and collaborate with fellow doctors.</p>
+                </div>
+                
+                <div class="dashboard-cards">
+                    <div class="info-card">
+                        <h3>📅 Appointments</h3>
+                        <p id="appointmentCount">Loading...</p>
+                        <button onclick="navigateTo('appointments')">View All</button>
+                    </div>
+                    
+                    <div class="info-card">
+                        <h3>📊 Patient Reports</h3>
+                        <p id="reportCount">Loading...</p>
+                        <button onclick="navigateTo('patient-reports')">View Reports</button>
+                    </div>
+                    
+                    <div class="info-card">
+                        <h3>👥 Connect</h3>
+                        <p>Network with other doctors</p>
+                        <button onclick="navigateTo('connect-doctors')">Connect Now</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Appointments Page -->
+            <div class="page-content" id="appointments-page" style="display:none;">
+                <h1>My Appointments</h1>
+                <div class="filter-section" style="margin-bottom: 20px;">
+                    <button class="btn-secondary" onclick="filterAppointments('all')">All</button>
+                    <button class="btn-secondary" onclick="filterAppointments('Pending')">Pending</button>
+                    <button class="btn-secondary" onclick="filterAppointments('Confirmed')">Confirmed</button>
+                    <button class="btn-secondary" onclick="filterAppointments('Completed')">Completed</button>
+                </div>
+                <div id="appointmentsList" class="appointments-list">
+                    <p>Loading appointments...</p>
+                </div>
+            </div>
+
+            <!-- Patient Reports Page -->
+            <div class="page-content" id="patient-reports-page" style="display:none;">
+                <h1>Patient Reports</h1>
+                <p class="info-text">View thyroid test reports for patients who have appointments with you</p>
+                <div id="patientReportsList" class="reports-list">
+                    <p>Loading patient reports...</p>
+                </div>
+            </div>
+
+            <!-- Connect with Doctors Page -->
+            <div class="page-content" id="connect-doctors-page" style="display:none;">
+                <h1>Connect with Other Doctors</h1>
+                <p class="info-text">Collaborate and consult with fellow medical professionals</p>
+                <div id="doctorsList" class="doctors-list">
+                    <p>Loading doctors...</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../js/doctor-dashboard.js"></script>
+</body>
+</html>

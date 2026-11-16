@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Reset Password</title>
+</head>
+<body>
+    <h1>Test Reset Password API</h1>
+    
+    <div>
+        <h3>Step 1: Get Security Questions</h3>
+        <input type="email" id="testEmail" value="test@example.com" placeholder="Email">
+        <button onclick="getSecurityQuestions()">Get Questions</button>
+        <div id="questionsResult"></div>
+    </div>
+    
+    <div>
+        <h3>Step 2: Reset Password</h3>
+        <input type="text" id="patientId" placeholder="Patient ID">
+        <input type="text" id="answer1" value="apple" placeholder="Answer 1">
+        <input type="text" id="answer2" value="government school" placeholder="Answer 2">
+        <input type="password" id="newPass" value="newpassword123" placeholder="New Password">
+        <button onclick="resetPassword()">Reset Password</button>
+        <div id="resetResult"></div>
+    </div>
+
+    <script>
+        async function getSecurityQuestions() {
+            const email = document.getElementById('testEmail').value;
+            const resultDiv = document.getElementById('questionsResult');
+            
+            try {
+                const response = await fetch('/api/patient/forgot-password', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email })
+                });
+                
+                const data = await response.json();
+                resultDiv.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+                
+                if (data.success) {
+                    document.getElementById('patientId').value = data.patient_id;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `Error: ${error.message}`;
+            }
+        }
+        
+        async function resetPassword() {
+            const patientId = document.getElementById('patientId').value;
+            const answer1 = document.getElementById('answer1').value;
+            const answer2 = document.getElementById('answer2').value;
+            const newPass = document.getElementById('newPass').value;
+            const resultDiv = document.getElementById('resetResult');
+            
+            console.log('Sending reset request:', {
+                patient_id: patientId,
+                security_answer_1: answer1,
+                security_answer_2: answer2,
+                new_password: newPass
+            });
+            
+            try {
+                const response = await fetch('/api/patient/reset-password', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        patient_id: parseInt(patientId),
+                        security_answer_1: answer1,
+                        security_answer_2: answer2,
+                        new_password: newPass
+                    })
+                });
+                
+                const data = await response.json();
+                resultDiv.innerHTML = `<pre>Status: ${response.status}\n${JSON.stringify(data, null, 2)}</pre>`;
+            } catch (error) {
+                resultDiv.innerHTML = `Error: ${error.message}`;
+            }
+        }
+    </script>
+</body>
+</html>

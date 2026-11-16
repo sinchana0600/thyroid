@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Login - ThyroDetect</title>
+    <link rel="stylesheet" href="../css/auth.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="split-container">
+        <!-- Left Side - Form -->
+        <div class="split-left">
+            <div class="auth-content">
+                <div class="logo-section">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                    </svg>
+                    <span>ThyroDetect</span>
+                </div>
+                
+                <div class="auth-header">
+                    <h1>Doctor Portal</h1>
+                    <p class="subtitle">Login to manage patients and appointments</p>
+                </div>
+                
+                <form id="doctorLoginForm">
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" placeholder="doctor@hospital.com" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                    </div>
+                    
+                    <button type="submit" class="btn-primary">
+                        <span>Access Dashboard</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"></path>
+                        </svg>
+                    </button>
+                    
+                    <p class="auth-link">
+                        Don't have an account? <a href="register.html">Register as Doctor</a>
+                    </p>
+                    
+                    <p class="auth-link">
+                        <a href="forgot-password.html" class="forgot-link">Forgot Password?</a>
+                    </p>
+                    
+                    <p class="auth-link">
+                        <a href="../index.html">← Back to Home</a>
+                    </p>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Right Side - Animation -->
+        <div class="split-right">
+            <div class="animation-container">
+                <div class="floating-shapes">
+                    <div class="shape shape-1"></div>
+                    <div class="shape shape-2"></div>
+                    <div class="shape shape-3"></div>
+                    <div class="shape shape-4"></div>
+                </div>
+                
+                <div class="illustration-content">
+                    <div class="illustration-card">
+                        <div class="card-header">
+                            <div class="pulse-indicator"></div>
+                            <span>Doctor Dashboard</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="feature-item">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                    <path d="M22 4L12 14.01l-3-3"></path>
+                                </svg>
+                                <span>Manage Appointments</span>
+                            </div>
+                            <div class="feature-item">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                    <path d="M22 4L12 14.01l-3-3"></path>
+                                </svg>
+                                <span>View Patient Reports</span>
+                            </div>
+                            <div class="feature-item">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                    <path d="M22 4L12 14.01l-3-3"></path>
+                                </svg>
+                                <span>Connect with Doctors</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-box">
+                            <h3>Expert</h3>
+                            <p>Care</p>
+                        </div>
+                        <div class="stat-box">
+                            <h3>24/7</h3>
+                            <p>Access</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="../js/doctor-login.js"></script>
+</body>
+</html>

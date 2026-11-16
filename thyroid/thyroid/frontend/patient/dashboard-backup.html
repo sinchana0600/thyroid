@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Dashboard</title>
+    <link rel="stylesheet" href="../css/dashboard.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <nav class="sidebar">
+            <div class="logo">
+                <h2>Thyroid Care</h2>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#" class="nav-link active" data-page="home">Dashboard</a></li>
+                <li><a href="#" class="nav-link" data-page="about">About Us</a></li>
+                <li><a href="#" class="nav-link" data-page="health-checkup">Health Checkup</a></li>
+                <li><a href="#" class="nav-link" data-page="thyroid-check">Thyroid Check</a></li>
+                <li><a href="#" class="nav-link" data-page="book-appointment">Book Appointment</a></li>
+                <li><a href="#" class="nav-link" data-page="view-appointments">View Appointments</a></li>
+                <li><a href="#" class="nav-link" data-page="reports">Reports</a></li>
+                <li><a href="#" class="nav-link logout" id="logoutBtn">Logout</a></li>
+            </ul>
+        </nav>
+
+        <main class="main-content">
+            <div class="page-content" id="home-page">
+                <h1>Welcome to Your Health Dashboard</h1>
+                <div class="welcome-message">
+                    <p>Your health is our priority. This platform helps you monitor your thyroid health, book appointments with specialists, and track your wellness journey.</p>
+                    <p>Regular checkups and early detection are key to maintaining optimal thyroid function. Use our tools to stay informed and proactive about your health.</p>
+                </div>
+                
+                <div class="dashboard-cards">
+                    <div class="info-card">
+                        <h3>Quick Health Check</h3>
+                        <p>Get personalized health tips based on your lifestyle</p>
+                        <button onclick="navigateTo('health-checkup')">Start Check</button>
+                    </div>
+                    
+                    <div class="info-card">
+                        <h3>Thyroid Analysis</h3>
+                        <p>Upload your test results for instant analysis</p>
+                        <button onclick="navigateTo('thyroid-check')">Analyze Now</button>
+                    </div>
+                    
+                    <div class="info-card">
+                        <h3>Book Appointment</h3>
+                        <p>Schedule a visit with our specialists</p>
+                        <button onclick="navigateTo('book-appointment')">Book Now</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="page-content" id="about-page" style="display:none;">
+                <h1>About Thyroid Care</h1>
+                <div class="about-content">
+                    <p>Thyroid Care is a comprehensive health management system designed to help patients monitor and manage their thyroid health effectively.</p>
+                    
+                    <h3>Our Mission</h3>
+                    <p>We aim to provide accessible, reliable, and user-friendly tools for early detection and management of thyroid conditions. Our platform connects patients with qualified specialists and offers intelligent health monitoring features.</p>
+                    
+                    <h3>What We Offer</h3>
+                    <ul>
+                        <li>Personalized health checkups with lifestyle-based recommendations</li>
+                        <li>Advanced thyroid test analysis using image recognition</li>
+                        <li>Easy appointment booking with experienced endocrinologists</li>
+                        <li>Comprehensive health reports and tracking</li>
+                        <li>Secure and confidential patient data management</li>
+                    </ul>
+                    
+                    <h3>Why Choose Us</h3>
+                    <p>Early detection saves lives. Our system uses modern technology to help you stay on top of your thyroid health. With simple tools and expert guidance, managing your wellness has never been easier.</p>
+                </div>
+            </div>
+
+            <div class="page-content" id="health-checkup-page" style="display:none;">
+                <h1>Health Checkup</h1>
+                <div class="checkup-form">
+                    <div class="form-section">
+                        <h3>Sleep & Stress Assessment</h3>
+                        <div class="form-group">
+                            <label>Hours of Sleep (per night)</label>
+                            <input type="number" id="sleepHours" step="0.5" min="0" max="24">
+                        </div>
+                        <div class="form-group">
+                            <label>Stress Level (1-10)</label>
+                            <input type="number" id="stressLevel" min="1" max="10">
+                        </div>
+                        <button type="button" class="btn-secondary" onclick="analyzeSleepStress()">Analyze Sleep & Stress</button>
+                        <div id="sleepStressTips" class="health-tips"></div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3>Physical Measurements</h3>
+                        <div class="form-group">
+                            <label>Height (cm)</label>
+                            <input type="number" id="height" step="0.1">
+                        </div>
+                        <div class="form-group">
+                            <label>Weight (kg)</label>
+                            <input type="number" id="weight" step="0.1">
+                        </div>
+                        <button type="button" class="btn-secondary" onclick="analyzeBMI()">Analyze BMI</button>
+                        <div id="bmiTips" class="health-tips"></div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3>Hydration & Age</h3>
+                        <div class="form-group">
+                            <label>Water Intake (liters per day)</label>
+                            <input type="number" id="waterIntake" step="0.1">
+                        </div>
+                        <div class="form-group">
+                            <label>Age</label>
+                            <input type="number" id="checkupAge">
+                        </div>
+                        <button type="button" class="btn-secondary" onclick="analyzeHydration()">Analyze Hydration</button>
+                        <div id="hydrationTips" class="health-tips"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="page-content" id="thyroid-check-page" style="display:none;">
+                <h1>Thyroid Check</h1>
+                <div class="thyroid-form">
+                    <p class="info-text">Upload an image of your thyroid test report or enter values manually.</p>
+                    
+                    <div class="input-mode-toggle">
+                        <button type="button" class="mode-btn active" onclick="toggleInputMode('image')">Upload Image</button>
+                        <button type="button" class="mode-btn" onclick="toggleInputMode('manual')">Manual Input</button>
+                    </div>
+                    
+                    <form id="thyroidCheckForm">
+                        <div id="imageInputSection">
+                            <div class="form-group">
+                                <label>Upload Test Report Image</label>
+                                <input type="file" id="reportImage" accept="image/*">
+                                <div id="imagePreview" class="image-preview"></div>
+                            </div>
+                        </div>
+                        
+                        <div id="manualInputSection" style="display:none;">
+                            <div class="form-group">
+                                <label>TSH Value (mIU/L)</label>
+                                <input type="number" id="tshManual" step="0.001" placeholder="e.g., 2.5">
+                            </div>
+                            <div class="form-group">
+                                <label>T3 Value (ng/dL) - Optional</label>
+                                <input type="number" id="t3Manual" step="0.01" placeholder="e.g., 1.2">
+                            </div>
+                            <div class="form-group">
+                                <label>T4 Value (µg/dL) - Optional</label>
+                                <input type="number" id="t4Manual" step="0.01" placeholder="e.g., 8.5">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group" style="margin-top: 20px;">
+                            <label style="font-weight: bold; margin-bottom: 15px; display: block; font-size: 1.1rem;">Select Symptoms (Check all that apply) *</label>
+                            
+                            <!-- Hypothyroid Symptoms -->
+                            <div style="background: #e3f2fd; padding: 15px; border-radius: 8px; margin-bottom: 15px; border-left: 4px solid #2196f3;">
+                                <h4 style="margin: 0 0 10px 0; color: #1976d2; font-size: 1rem;">
+                                    📘 Hypothyroid Symptoms
+                                </h4>
+                                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px;">
+                                    <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                                        <input type="checkbox" name="symptoms" value="fatigue" class="symptom-checkbox">
+                                        <span>Fatigue / Tiredness</span>
+                                    </label>
+                                    <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                                        <input type="checkbox" name="symptoms" value="weight_gain" class="symptom-checkbox">
+                                        <span>Weight Gain</span>
+                                    </label>
+                                    <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                                        <input type="checkbox" name="symptoms" value="cold_sensitivity" class="symptom-checkbox">
+                                        <span>Cold Sensitivity</span>
+                                    </label>
+                                    <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                                        <input type="checkbox" name="symptoms" value="dry_skin" class="symptom-checkbox">
+                                        <span>Dry Skin</span>
+                                    </label>
+                                    <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                                        <input type="checkbox" name="symptoms" value="hair_loss" class="symptom-checkbox">
+                                        <span>Hair Loss</span>
+                                    </label>
+                                    <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                                        <input type="checkbox" name="symptoms" value="muscle_weakness" class="symptom-checkbox">
+                                        <span>Muscle Weakness</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Hyperthyroid Symptoms -->
+                            <div style="background: #fff3e0; padding: 15px; border-radius: 8px; margin-bottom: 15px; border-left: 4px solid #ff9800;">
+                                <h4 style="margin: 0 0 10px 0; color: #f57c00; font-size: 1rem;">
+                                    📙 Hyperthyroid Symptoms
+                                </h4>
+                                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px;">
+                                    <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                                        <input type="checkbox" name="symptoms" value="heat_sensitivity" class="symptom-checkbox">
+                                        <span>Heat Sensitivity</span>
+                                    </label>
+                                    <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                                        <input type="checkbox" name="symptoms" value="irregular_heartbeat" class="symptom-checkbox">
+                                        <span>Irregular Heartbeat</span>
+                                    </label>
+                                    <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                                        <input type="checkbox" name="symptoms" value="mood_swings" class="symptom-checkbox">
+                                        <span>Mood Swings</span>
+                                    </label>
+                                    <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                                        <input type="checkbox" name="symptoms" value="weight_loss" class="symptom-checkbox">
+                                        <span>Weight Loss</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Goiter Symptoms -->
+                            <div style="background: #fce4ec; padding: 15px; border-radius: 8px; margin-bottom: 15px; border-left: 4px solid #e91e63;">
+                                <h4 style="margin: 0 0 10px 0; color: #c2185b; font-size: 1rem;">
+                                    📕 Goiter Symptoms
+                                </h4>
+                                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px;">
+                                    <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                                        <input type="checkbox" name="symptoms" value="neck_swelling" class="symptom-checkbox">
+                                        <span>Neck Swelling (visible lump in throat)</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- No Symptoms Option -->
+                            <div style="background: #f5f5f5; padding: 15px; border-radius: 8px; margin-bottom: 10px; border-left: 4px solid #9e9e9e;">
+                                <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                                    <input type="checkbox" name="symptoms" value="none" class="symptom-checkbox">
+                                    <span style="font-weight: 500;">No Symptoms</span>
+                                </label>
+                            </div>
+
+                            <p style="color: #666; font-size: 0.9rem; margin-top: 8px;">
+                                * Please select at least one symptom to proceed with analysis
+                            </p>
+                        </div>
+                        
+                        <button type="submit" class="btn-primary">Analyze Report</button>
+                    </form>
+
+                    <div id="thyroidResult" class="thyroid-result"></div>
+                </div>
+            </div>
+
+            <div class="page-content" id="book-appointment-page" style="display:none;">
+                <h1>Book Appointment</h1>
+                <div class="appointment-form">
+                    <form id="bookAppointmentForm">
+                        <div class="form-group">
+                            <label>Select Doctor</label>
+                            <select id="doctorSelect" required>
+                                <option value="">Loading doctors...</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Appointment Date</label>
+                            <input type="date" id="appointmentDate" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Appointment Time</label>
+                            <input type="time" id="appointmentTime" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Notes (Optional)</label>
+                            <textarea id="appointmentNotes" rows="4"></textarea>
+                        </div>
+
+                        <button type="submit" class="btn-primary">Book Appointment</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="page-content" id="view-appointments-page" style="display:none;">
+                <h1>My Appointments</h1>
+                <div id="appointmentsList" class="appointments-list">
+                    <p>Loading appointments...</p>
+                </div>
+            </div>
+
+            <div class="page-content" id="reports-page" style="display:none;">
+                <h1>My Reports</h1>
+                <div id="reportsList" class="reports-list">
+                    <p>Loading reports...</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../js/patient-dashboard.js?v=2.0"></script>
+</body>
+</html>

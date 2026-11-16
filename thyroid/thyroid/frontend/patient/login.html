@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Login - ThyroDetect</title>
+    <link rel="stylesheet" href="../css/auth.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body class="unique-auth-body">
+    <!-- Unique Modern Container -->
+    <div class="unique-container">
+        <!-- Animated Background -->
+        <div class="unique-bg">
+            <div class="wave wave-1"></div>
+            <div class="wave wave-2"></div>
+            <div class="wave wave-3"></div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="unique-content">
+            <!-- Left - 3D Thyroid Visualization -->
+            <div class="visual-side">
+                <div class="thyroid-container">
+                    <!-- 3D Rotating Thyroid Gland -->
+                    <div class="thyroid-3d">
+                        <div class="thyroid-gland">
+                            <div class="thyroid-lobe left-lobe"></div>
+                            <div class="thyroid-lobe right-lobe"></div>
+                            <div class="thyroid-isthmus"></div>
+                        </div>
+                        
+                        <!-- Scanning Effect -->
+                        <div class="scan-line"></div>
+                        
+                        <!-- Data Points -->
+                        <div class="data-point point-1">
+                            <div class="point-dot"></div>
+                            <div class="point-label">TSH</div>
+                        </div>
+                        <div class="data-point point-2">
+                            <div class="point-dot"></div>
+                            <div class="point-label">T3</div>
+                        </div>
+                        <div class="data-point point-3">
+                            <div class="point-dot"></div>
+                            <div class="point-label">T4</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Info Cards -->
+                    <div class="info-cards">
+                        <div class="info-card card-animate-1">
+                            <div class="info-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                                    <path d="M2 17l10 5 10-5M2 12l10 5 10-5"></path>
+                                </svg>
+                            </div>
+                            <div class="info-text">
+                                <h4>AI Analysis</h4>
+                                <p>95%+ Accuracy</p>
+                            </div>
+                        </div>
+                        
+                        <div class="info-card card-animate-2">
+                            <div class="info-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                                </svg>
+                            </div>
+                            <div class="info-text">
+                                <h4>Real-time</h4>
+                                <p>Monitoring</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Right - Login Form -->
+            <div class="form-side">
+                <div class="form-container">
+                    <!-- Logo -->
+                    <div class="brand-logo">
+                        <div class="logo-icon">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                            </svg>
+                        </div>
+                        <div class="logo-text">
+                            <h2>ThyroDetect</h2>
+                            <p>Patient Portal</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Welcome Text -->
+                    <div class="welcome-section">
+                        <h1>Welcome Back</h1>
+                        <p>Access your personalized health dashboard</p>
+                    </div>
+                    
+                    <!-- Login Form -->
+                    <form id="loginForm" class="modern-form">
+                        <div class="input-group">
+                            <div class="input-icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                    <path d="M22 6l-10 7L2 6"></path>
+                                </svg>
+                            </div>
+                            <input type="email" id="email" name="email" placeholder="Email Address" required>
+                            <label>Email</label>
+                        </div>
+                        
+                        <div class="input-group">
+                            <div class="input-icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                                </svg>
+                            </div>
+                            <input type="password" id="password" name="password" placeholder="Password" required>
+                            <label>Password</label>
+                        </div>
+                        
+                        <button type="submit" class="submit-btn">
+                            <span>Login to Dashboard</span>
+                            <div class="btn-arrow">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M5 12h14M12 5l7 7-7 7"></path>
+                                </svg>
+                            </div>
+                        </button>
+                        
+                        <div id="message" class="message"></div>
+                    </form>
+                    
+                    <!-- Links -->
+                    <div class="form-footer">
+                        <p>Don't have an account? <a href="register.html">Sign up</a></p>
+                        <p><a href="forgot-password.html" class="forgot-link">Forgot Password?</a></p>
+                        <a href="../index.html" class="back-link">← Back to Home</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="../js/patient-login.js"></script>
+</body>
+</html>

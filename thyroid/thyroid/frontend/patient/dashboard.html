@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Dashboard</title>
+    <link rel="stylesheet" href="../css/dashboard.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <nav class="sidebar">
+            <div class="logo">
+                <h2>Thyroid Care</h2>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#" class="nav-link active" data-page="home">Dashboard</a></li>
+                <li><a href="#" class="nav-link" data-page="health-checkup">Health Checkup</a></li>
+                <li><a href="#" class="nav-link" data-page="thyroid-check">Thyroid Check</a></li>
+                <li><a href="#" class="nav-link" data-page="book-appointment">Book Appointment</a></li>
+                <li><a href="#" class="nav-link" data-page="view-appointments">View Appointments</a></li>
+                <li><a href="#" class="nav-link" data-page="reports">Reports</a></li>
+                <li><a href="#" class="nav-link logout" id="logoutBtn">Logout</a></li>
+            </ul>
+        </nav>
+
+        <main class="main-content">
+            <div class="page-content" id="home-page">
+                <h1>Welcome to Your Health Dashboard</h1>
+                <div class="welcome-message">
+                    <p>Your health is our priority. This platform helps you monitor your thyroid health, book appointments with specialists, and track your wellness journey.</p>
+                    <p>Regular checkups and early detection are key to maintaining optimal thyroid function. Use our tools to stay informed and proactive about your health.</p>
+                </div>
+                
+                <div class="dashboard-cards">
+                    <div class="info-card">
+                        <h3>Quick Health Check</h3>
+                        <p>Get personalized health tips based on your lifestyle</p>
+                        <button onclick="navigateTo('health-checkup')">Start Check</button>
+                    </div>
+                    
+                    <div class="info-card">
+                        <h3>Thyroid Analysis</h3>
+                        <p>Upload your test results for instant analysis</p>
+                        <button onclick="navigateTo('thyroid-check')">Analyze Now</button>
+                    </div>
+                    
+                    <div class="info-card">
+                        <h3>Book Appointment</h3>
+                        <p>Schedule a visit with our specialists</p>
+                        <button onclick="navigateTo('book-appointment')">Book Now</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="page-content" id="health-checkup-page" style="display:none;">
+                <h1>Health Checkup</h1>
+                <div class="checkup-form">
+                    <div class="form-section">
+                        <h3>Sleep & Work Assessment</h3>
+                        <div class="form-group">
+                            <label>Hours of Sleep (per night)</label>
+                            <input type="number" id="sleepHours" step="0.5" min="0.1" max="24" placeholder="7-9 hours recommended">
+                        </div>
+                        <div class="form-group">
+                            <label>Working Hours (per day)</label>
+                            <input type="number" id="workingHours" min="0.1" max="20" step="0.5" placeholder="8 hours standard">
+                        </div>
+                        <button type="button" class="btn-secondary" onclick="analyzeSleepWork()">Analyze Sleep & Work</button>
+                    </div>
+
+                    <div class="form-section">
+                        <h3>Physical Measurements</h3>
+                        <div class="form-group">
+                            <label>Height (cm)</label>
+                            <input type="number" id="height" step="0.1" min="30" max="300" placeholder="150-200 cm typical">
+                        </div>
+                        <div class="form-group">
+                            <label>Weight (kg)</label>
+                            <input type="number" id="weight" step="0.1" min="1" max="500" placeholder="40-120 kg typical">
+                        </div>
+                        <button type="button" class="btn-secondary" onclick="analyzeBMI()">Analyze BMI</button>
+                    </div>
+
+                    <div class="form-section">
+                        <h3>Hydration & Age</h3>
+                        <div class="form-group">
+                            <label>Water Intake (liters per day)</label>
+                            <input type="number" id="waterIntake" step="0.1" min="0.1" max="10" placeholder="2-3 liters recommended">
+                        </div>
+                        <div class="form-group">
+                            <label>Age</label>
+                            <input type="number" id="checkupAge" min="1" max="150" placeholder="18-80 years typical">
+                        </div>
+                        <button type="button" class="btn-secondary" onclick="analyzeHydration()">Analyze Hydration</button>
+                    </div>
+                </div>
+                
+                <!-- Comprehensive Analysis Button -->
+                <div class="comprehensive-analysis-section">
+                    <button type="button" class="btn-comprehensive" onclick="performComprehensiveAnalysis()">
+                        🔬 Complete Thyroid Health Assessment
+                    </button>
+                    <p class="analysis-note">Complete all sections above, then click for comprehensive thyroid health analysis</p>
+                </div>
+                
+                <!-- Results displayed outside the 3-column grid -->
+                <div class="results-container">
+                    <div id="sleepStressTips" class="health-tips"></div>
+                    <div id="bmiTips" class="health-tips"></div>
+                    <div id="hydrationTips" class="health-tips"></div>
+                    <div id="comprehensiveResults" class="comprehensive-results"></div>
+                </div>
+            </div>
+
+            <div class="page-content" id="thyroid-check-page" style="display:none;">
+                <h1>Thyroid Check - Hybrid Approach</h1>
+                <div class="thyroid-form">
+                    <p class="info-text">📋 Upload your test report image (OCR will auto-extract values) OR enter values manually</p>
+                    
+                    <form id="thyroidCheckForm">
+                        <!-- Split Container: Image Upload (Left) + Manual Input (Right) -->
+                        <div class="hybrid-container">
+                            <!-- Left Side: Image Upload with Auto-OCR -->
+                            <div class="hybrid-section image-upload-section">
+                                <div class="section-header">
+                                    <h3>📷 Upload Test Report</h3>
+                                    <p class="section-subtitle">OCR will automatically extract values</p>
+                                </div>
+                                
+                                <div class="upload-area">
+                                    <input type="file" id="reportImage" accept="image/*" style="display: none;">
+                                    <div id="imagePreview" class="image-preview-box" onclick="document.getElementById('reportImage').click()">
+                                        <div class="preview-placeholder">
+                                            <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                                                <circle cx="8.5" cy="8.5" r="1.5"/>
+                                                <polyline points="21 15 16 10 5 21"/>
+                                            </svg>
+                                            <p>Click to upload image</p>
+                                            <small>Supports: JPG, PNG, PDF</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div id="ocrStatus" class="ocr-status-box"></div>
+                            </div>
+
+                            <!-- Right Side: Manual Input Fields -->
+                            <div class="hybrid-section manual-input-section">
+                                <div class="section-header">
+                                    <h3>✍️ Enter Values Manually</h3>
+                                    <p class="section-subtitle">Review OCR results or type manually</p>
+                                </div>
+                                
+                                <div class="manual-inputs">
+                                    <div class="input-field">
+                                        <label>TSH Value (mIU/L) <span class="required">*</span></label>
+                                        <input type="number" id="tshManual" step="0.001" placeholder="e.g., 2.5" required>
+                                        <span class="range-hint">Normal: 0.4 - 4.0 mIU/L</span>
+                                    </div>
+                                    
+                                    <div class="input-field">
+                                        <label>T3 Value (ng/dL)</label>
+                                        <input type="number" id="t3Manual" step="0.01" placeholder="e.g., 1.2">
+                                        <span class="range-hint">Normal: 0.8 - 2.0 ng/dL</span>
+                                    </div>
+                                    
+                                    <div class="input-field">
+                                        <label>T4 Value (µg/dL)</label>
+                                        <input type="number" id="t4Manual" step="0.01" placeholder="e.g., 8.5">
+                                        <span class="range-hint">Normal: 5.0 - 12.0 µg/dL</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Symptoms Selection Section -->
+                        <div class="symptoms-section">
+                            <div class="symptoms-header">
+                                <h3>🩺 Select Your Symptoms</h3>
+                                <p class="symptoms-subtitle">Check all symptoms that apply to you <span class="required">*</span></p>
+                            </div>
+                            
+                            <div class="symptoms-grid">
+                                <!-- Hypothyroid Symptoms -->
+                                <div class="symptom-category hypothyroid">
+                                    <div class="category-header">
+                                        <span class="category-icon">❄️</span>
+                                        <h4>Hypothyroid Symptoms</h4>
+                                    </div>
+                                    <div class="symptom-options">
+                                        <label class="symptom-label">
+                                            <input type="checkbox" name="symptoms" value="fatigue" class="symptom-checkbox">
+                                            <span class="symptom-text">Fatigue / Tiredness</span>
+                                        </label>
+                                        <label class="symptom-label">
+                                            <input type="checkbox" name="symptoms" value="weight_gain" class="symptom-checkbox">
+                                            <span class="symptom-text">Weight Gain</span>
+                                        </label>
+                                        <label class="symptom-label">
+                                            <input type="checkbox" name="symptoms" value="cold_sensitivity" class="symptom-checkbox">
+                                            <span class="symptom-text">Cold Sensitivity</span>
+                                        </label>
+                                        <label class="symptom-label">
+                                            <input type="checkbox" name="symptoms" value="dry_skin" class="symptom-checkbox">
+                                            <span class="symptom-text">Dry Skin</span>
+                                        </label>
+                                        <label class="symptom-label">
+                                            <input type="checkbox" name="symptoms" value="hair_loss" class="symptom-checkbox">
+                                            <span class="symptom-text">Hair Loss</span>
+                                        </label>
+                                        <label class="symptom-label">
+                                            <input type="checkbox" name="symptoms" value="muscle_weakness" class="symptom-checkbox">
+                                            <span class="symptom-text">Muscle Weakness</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <!-- Hyperthyroid Symptoms -->
+                                <div class="symptom-category hyperthyroid">
+                                    <div class="category-header">
+                                        <span class="category-icon">🔥</span>
+                                        <h4>Hyperthyroid Symptoms</h4>
+                                    </div>
+                                    <div class="symptom-options">
+                                        <label class="symptom-label">
+                                            <input type="checkbox" name="symptoms" value="heat_sensitivity" class="symptom-checkbox">
+                                            <span class="symptom-text">Heat Sensitivity</span>
+                                        </label>
+                                        <label class="symptom-label">
+                                            <input type="checkbox" name="symptoms" value="irregular_heartbeat" class="symptom-checkbox">
+                                            <span class="symptom-text">Irregular Heartbeat</span>
+                                        </label>
+                                        <label class="symptom-label">
+                                            <input type="checkbox" name="symptoms" value="mood_swings" class="symptom-checkbox">
+                                            <span class="symptom-text">Mood Swings</span>
+                                        </label>
+                                        <label class="symptom-label">
+                                            <input type="checkbox" name="symptoms" value="weight_loss" class="symptom-checkbox">
+                                            <span class="symptom-text">Weight Loss</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <!-- Goiter Symptoms -->
+                                <div class="symptom-category goiter">
+                                    <div class="category-header">
+                                        <span class="category-icon">🫁</span>
+                                        <h4>Goiter Symptoms</h4>
+                                    </div>
+                                    <div class="symptom-options">
+                                        <label class="symptom-label">
+                                            <input type="checkbox" name="symptoms" value="neck_swelling" class="symptom-checkbox">
+                                            <span class="symptom-text">Neck Swelling</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <!-- No Symptoms -->
+                                <div class="symptom-category no-symptoms">
+                                    <div class="category-header">
+                                        <span class="category-icon">✅</span>
+                                        <h4>No Symptoms</h4>
+                                    </div>
+                                    <div class="symptom-options">
+                                        <label class="symptom-label">
+                                            <input type="checkbox" name="symptoms" value="none" class="symptom-checkbox">
+                                            <span class="symptom-text">I have no symptoms</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Submit Button -->
+                        <div class="submit-section">
+                            <button type="submit" class="btn-analyze">
+                                <span class="btn-icon">🔬</span>
+                                <span class="btn-text">Analyze Report</span>
+                            </button>
+                        </div>
+                    </form>
+
+                    <div id="thyroidResult" class="thyroid-result"></div>
+                </div>
+            </div>
+
+            <div class="page-content" id="book-appointment-page" style="display:none;">
+                <h1>Book Appointment</h1>
+                <div class="appointment-form">
+                    <form id="bookAppointmentForm">
+                        <div class="form-group">
+                            <label>Select Doctor</label>
+                            <select id="doctorSelect" required>
+                                <option value="">Loading doctors...</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Appointment Date</label>
+                            <input type="date" id="appointmentDate" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Appointment Time</label>
+                            <div class="time-input-container">
+                                <div class="time-fields">
+                                    <select id="appointmentHour" required>
+                                        <option value="">Hour</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
+                                        <option value="11">11</option>
+                                        <option value="12">12</option>
+                                    </select>
+                                    <span class="time-separator">:</span>
+                                    <select id="appointmentMinute" required>
+                                        <option value="">Min</option>
+                                        <option value="00">00</option>
+                                        <option value="15">15</option>
+                                        <option value="30">30</option>
+                                        <option value="45">45</option>
+                                    </select>
+                                </div>
+                                <div class="ampm-container">
+                                    <label class="radio-label">
+                                        <input type="radio" name="ampm" value="AM" required>
+                                        <span class="radio-text">AM</span>
+                                    </label>
+                                    <label class="radio-label">
+                                        <input type="radio" name="ampm" value="PM" required>
+                                        <span class="radio-text">PM</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Notes (Optional)</label>
+                            <textarea id="appointmentNotes" rows="4"></textarea>
+                        </div>
+
+                        <button type="submit" class="btn-primary">Book Appointment</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="page-content" id="view-appointments-page" style="display:none;">
+                <h1>My Appointments</h1>
+                <div id="appointmentsList" class="appointments-list">
+                    <p>Loading appointments...</p>
+                </div>
+            </div>
+
+            <div class="page-content" id="reports-page" style="display:none;">
+                <h1>My Reports</h1>
+                <div id="reportsList" class="reports-list">
+                    <p>Loading reports...</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../js/patient-dashboard.js?v=2.0"></script>
+</body>
+</html>
